@@ -16,9 +16,6 @@ subtitle = "おすすめしたいものを全力で褒める"
 [permalinks]
 post = "/post/:slug/"
 
-[params.assets]
-customCSS = ["css/custom.css"]
-
 [params.info]
 adsense = "" # Adsense ID (ID only, without ca-pub-)
 enableSocial = false # Adds OpenGraph and Twitter cards
