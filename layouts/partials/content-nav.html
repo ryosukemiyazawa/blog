@@ -1,0 +1,24 @@
+<section class="section">
+  <div class="container">
+    <div class="prev-next-link">
+        {{ if .PrevInSection }}
+        <a class="prev-link" href="{{.PrevInSection.RelPermalink}}">
+          <p class="prev-next-label">前の記事</p>
+          <p>{{ .PrevInSection.Title }}</p>
+        </a>
+        {{ end }}
+        {{ if .NextInSection }}
+        <a class="next-link" href="{{.NextInSection.RelPermalink}}">
+          <p class="prev-next-label">次の投稿</p>
+          <p>{{ .NextInSection.Title }}</p>
+        </a>
+        {{ end }}
+    </div>
+
+    <div class="has-text-centered">
+      <p class="button">
+        <a href="/">記事一覧へ戻る</a>
+      </p>
+    </div>
+  </div>
+</section>

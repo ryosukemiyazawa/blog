@@ -1,0 +1,36 @@
+
+<section class="section">
+
+  <div class="footer-link container has-text-centered">
+    <p><a href="{{ .Site.BaseURL }}about/">このサイトについて</a></p>
+  </div>
+
+  <div class="footer-sns container has-text-centered">
+      <div>
+      {{- range $platform, $username := .Site.Params.social -}}
+      {{- if $username -}}
+      <a class="level-item" href='{{ print ( index $.Site.Data.theme.social.base $platform ) $username }}' target='_blank' rel='noopener'>
+        <span class="icon">
+          <i class>
+            {{- partial "svg/icons" $platform -}}
+          </i>
+        </span>
+      </a>
+      {{- end -}}
+      {{- end -}}
+    </div>
+  </div>
+
+  <div class="container has-text-centered">
+
+    <p>{{ .Site.Copyright | safeHTML }}</p>
+    {{if .Site.Params.Info.poweredby}}
+      <p>Powered by <a href="https://gohugo.io/">Hugo</a> &amp; <a href="https://github.com/ribice/kiss">Kiss</a>.</p>
+    {{ end }}
+  </div>
+</section>
+{{ if .Site.GoogleAnalytics }}
+{{ template "_internal/google_analytics_async.html" . }}
+{{ end }}
+</body>
+</html>
