@@ -23,7 +23,7 @@ features = [
   "social-menu",
   "syntax-highlighting",
 ]
-min_version = 0.28
+min_version = 0.17
 
 [author]
   name = "ribice"
