@@ -101,4 +101,7 @@ C 始点ハンドル3 終点ハンドル3 終点3
 ...
 ```
 
-出来上がったをヘッダー部分においてひとまず完成です。
+今回作成したコードをCodePenに置きました。
+
+<p data-height="265" data-theme-id="0" data-slug-hash="PePYqe" data-default-tab="js,result" data-user="ryosukemiyazawa" data-embed-version="2" data-pen-title="SVG Path Animation " class="codepen">See the Pen <a href="https://codepen.io/ryosukemiyazawa/pen/PePYqe/">SVG Path Animation </a> by ryosukemiyazawa (<a href="https://codepen.io/ryosukemiyazawa">@ryosukemiyazawa</a>) on <a href="https://codepen.io">CodePen</a>.</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
