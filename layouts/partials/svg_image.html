@@ -1,0 +1,153 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">
+  <g><path id="svg-path" d="" /></g>
+</svg>
+
+<script type="text/javascript">
+(function(){
+	var targetsvg = document.getElementById("svg-path");
+	var update_path = function(d){ targetsvg.setAttribute("d", d); }
+	var update_color = function(d){ targetsvg.setAttribute("fill", d); }
+
+	var g = document.getElementById("svg-dev-anchors");
+
+	var clear_anchors = function(){
+		g.innerHTML = "";
+	}
+	var draw_anchor = function(start, end){
+		g.innerHTML = g.innerHTML +
+			'<line x1="'+start[0]+'" y1="'+start[1]+'" x2="'+end[0]+'" y2="'+end[1]+'" strole-width="0.5" stroke="#999999"/>' +
+			'<circle cx="'+end[0]+'" cy="'+end[1]+'" r="1" fill="blue" />'
+		;
+	}
+	var draw_point = function(point, color){
+		g.innerHTML = g.innerHTML +
+			'<circle cx="'+point[0]+'" cy="'+point[1]+'" r="1" fill="'+color+'" />'
+		;
+	}
+
+
+	var create_point = function(center, r, deg){
+
+		var d = deg + (Math.random() * 0.4 - 0.1);
+		var r2 = r * (Math.random() * 0.8 + 0.9);
+
+		return [
+			center[0] + r2 * Math.cos(d),
+			center[0] + r2 * Math.sin(d)
+		];
+	}
+
+	//p0 -> p1のハンドルを作成する
+	var create_point_handle = function(p0, p1, last_handle){
+
+		var h = {
+			point_start : p0,
+			point_end : p1,
+			handle_start : (last_handle != null)
+				? create_reverse_handle(p0, last_handle.handle_end)
+				: create_random_handle(p1, p0),
+			handle_end : create_random_handle(p0, p1)
+		}
+
+		return h;
+	}
+
+	//ランダムなanchorポイントを作成する
+	var create_random_handle = function(p0, p1){
+
+		//0.6〜0.9の範囲
+		var ratio = (Math.random() * 0.2) + 0.8;
+		var x = p0[0] + (p1[0] - p0[0]) * ratio;
+		var y = p0[1] + (p1[1] - p0[1]) * ratio;
+
+		return [
+			x,
+			y
+		];
+
+	}
+
+	//反転させたhandleを作成する
+	var create_reverse_handle = function(point, handle){
+
+		var dx = handle[0] - point[0];
+		var dy = handle[1] - point[1];
+
+		return [
+			point[0] - dx,
+			point[1] - dy,
+		];
+	}
+
+
+	var update_points = function(){
+		var point_count = 6;
+		var center = [50, 50];
+		var r = 30;
+		var deg = Math.PI * 2 / point_count;
+
+		var points = [];
+		for(var i=0; i<point_count; i++){
+			var point = create_point(center, r, i * deg);
+			points.push(point);
+		}
+
+		var last_handle = null;
+		var handles = [];
+		for(var i=1; i<point_count; i++){
+			var point = points[i];
+			var p0 = points[i-1];
+
+			var handle = create_point_handle(p0, point, last_handle);
+			handles.push(handle);
+
+			last_handle = handle;
+		}
+
+		//始点に繋ぐ
+		var handle = create_point_handle(points[point_count-1], points[0], last_handle);
+		handle.handle_start = create_reverse_handle(handle.point_start, last_handle.handle_end);
+		handle.handle_end = create_reverse_handle(handle.point_end, handles[0].handle_start)
+		handles.push(handle)
+
+		var d = [];
+		for(var i=0; i<handles.length; i++){
+			var handle = handles[i];
+			if(i == 0){
+				d.push("M" + handle.point_start.join(" "));
+			}
+
+			d.push("C" + handle.handle_start.join(","));
+			d.push(" " + handle.handle_end.join(","));
+			d.push(" " + handle.point_end.join(","));
+		}
+
+		//パスを閉じる
+		d.push("z");
+
+		update_path(d.join(""));
+
+		//色も変更する
+		update_color("hsla("+Math.random()*360+",49.2%,87.6%, 0.7)")
+
+	}
+
+	update_points();
+
+	setTimeout(function(){
+		update_points();
+	}, 100);
+
+	setInterval(function(){
+		update_points();
+	},5000);
+
+})()
+</script>
+<style type="text/css">
+#svg-path {
+  -webkit-transition-duration: 5s;
+  -webkit-transition-timing-function: ease-in-out;
+}
+</style>

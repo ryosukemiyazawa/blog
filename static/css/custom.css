@@ -1,6 +1,10 @@
 .section-nav .nav{
   flex-direction: column;
 }
+.nav-image {
+  text-align: center;
+  margin-top: 40px;
+}
 
 .footer-link{
   margin-bottom: 2rem;
